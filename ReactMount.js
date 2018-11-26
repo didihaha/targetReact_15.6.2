@@ -61,7 +61,8 @@ function firstDifferenceIndex(string1, string2) {
 /**
  * @param {DOMElement|DOMDocument} container DOM element that may contain
  * a React component
- * @return {?*} DOM element that may have the reactRoot ID, or null.
+ * @return {?*} container不存在直接返回null,若为document返回document.documentElement,其他类型则返回第一个子节点
+ * 16版本以前根节点必须有一个标签包裹的原因的函数
  */
 function getReactRootElementInContainer(container) {
   if (!container) {
@@ -211,7 +212,7 @@ function getHostRootInstanceInContainer(container) {
   var prevHostInstance = rootEl && ReactDOMComponentTree.getInstanceFromNode(rootEl);
   return prevHostInstance && !prevHostInstance._hostParent ? prevHostInstance : null;
 }
-
+// 获取顶级组件
 function getTopLevelWrapperInContainer(container) {
   var root = getHostRootInstanceInContainer(container);
   return root ? root._hostContainerInfo._topLevelWrapper : null;
@@ -336,7 +337,6 @@ var ReactMount = {
    * @return {ReactComponent} Component instance rendered in `container`.
    */
   renderSubtreeIntoContainer: function (parentComponent, nextElement, container, callback) {
-    !(parentComponent != null && ReactInstanceMap.has(parentComponent)) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'parentComponent must be a valid React Component') : _prodInvariant('38') : void 0;
     return ReactMount._renderSubtreeIntoContainer(parentComponent, nextElement, container, callback);
   },
 
