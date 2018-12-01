@@ -347,6 +347,7 @@ var ReactMount = {
 
     process.env.NODE_ENV !== 'production' ? warning(!container || !container.tagName || container.tagName.toUpperCase() !== 'BODY', 'render(): Rendering components directly into document.body is ' + 'discouraged, since its children are often manipulated by third-party ' + 'scripts and browser extensions. This may lead to subtle ' + 'reconciliation issues. Try rendering into a container element created ' + 'for your app.') : void 0;
 
+    // 将传入的nextElement包装成Component类
     var nextWrappedElement = React.createElement(TopLevelWrapper, {
       child: nextElement
     });

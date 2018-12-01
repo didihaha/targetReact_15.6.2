@@ -72,13 +72,11 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
       !false ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', type == null ? type : typeof type, info) : _prodInvariant('130', type == null ? type : typeof type, info) : void 0;
     }
 
-    // Special case string values
+    // 若为html本身存在的标签执行
     if (typeof element.type === 'string') {
       instance = ReactHostComponent.createInternalComponent(element);
     } else if (isInternalComponentType(element.type)) {
-      // This is temporarily available for custom components that are not string
-      // representations. I.e. ART. Once those are updated to use the string
-      // representation, we can drop this code path.
+      // 若为component类，且不为高阶组件(函数类)
       instance = new element.type(element);
 
       // We renamed this. Allow the old name for compat. :(
@@ -86,6 +84,7 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
         instance.getHostNode = instance.getNativeNode;
       }
     } else {
+      // 若仍为component类走到这来
       instance = new ReactCompositeComponentWrapper(element);
     }
   } else if (typeof node === 'string' || typeof node === 'number') {
