@@ -72,6 +72,7 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
   // The following is inlined from ReactElement. This means we can optimize
   // some checks. React Fiber also inlines this logic for similar purposes.
   type === 'object' && children.$$typeof === REACT_ELEMENT_TYPE) {
+    // 将生成的dom节点放在childInstances(是个对象{})即traverseContext中
     callback(traverseContext, children,
     // If it's the only child, treat the name as if it was wrapped in an array
     // so that it's consistent if the number of children grows.
@@ -85,6 +86,7 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
   var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
 
   if (Array.isArray(children)) {
+    // 是数组递归调用生成NODE节点
     for (var i = 0; i < children.length; i++) {
       child = children[i];
       nextName = nextNamePrefix + getComponentKey(child, i);

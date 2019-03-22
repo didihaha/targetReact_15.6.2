@@ -99,7 +99,8 @@ function mountComponentIntoNode(wrapperInstance, container, transaction, shouldR
     markerName = 'React mount: ' + (typeof type === 'string' ? type : type.displayName || type.name);
     console.time(markerName);
   }
-
+  
+  // ReactReconciler实际调用的是传入的wrapperInstance的mountComponent方法
   var markup = ReactReconciler.mountComponent(wrapperInstance, transaction, null, ReactDOMContainerInfo(wrapperInstance, container), context, 0 /* parentDebugID */
   );
 
@@ -347,7 +348,7 @@ var ReactMount = {
 
     process.env.NODE_ENV !== 'production' ? warning(!container || !container.tagName || container.tagName.toUpperCase() !== 'BODY', 'render(): Rendering components directly into document.body is ' + 'discouraged, since its children are often manipulated by third-party ' + 'scripts and browser extensions. This may lead to subtle ' + 'reconciliation issues. Try rendering into a container element created ' + 'for your app.') : void 0;
 
-    // 将传入的nextElement包装成Component类
+    // 将传入的nextElement当做子节点传入到TopLevelWrapper类中
     var nextWrappedElement = React.createElement(TopLevelWrapper, {
       child: nextElement
     });

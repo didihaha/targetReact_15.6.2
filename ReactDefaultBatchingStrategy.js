@@ -1,11 +1,6 @@
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
+ * 该文件暴露的对象为
  */
-
 'use strict';
 
 var _assign = require('object-assign');
@@ -55,7 +50,7 @@ var ReactDefaultBatchingStrategy = {
 
     // The code is written this way to avoid extra allocations
     if (alreadyBatchingUpdates) {
-      return callback(a, b, c, d, e);
+      return callback(a, b, c, d, e)
     } else {
       return transaction.perform(callback, null, a, b, c, d, e);
     }

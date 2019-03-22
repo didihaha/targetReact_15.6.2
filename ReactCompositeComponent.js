@@ -183,6 +183,7 @@ var ReactCompositeComponent = {
     // Initialize the public class
     var doConstruct = shouldConstruct(Component);
     var inst = this._constructComponent(doConstruct, publicProps, publicContext, updateQueue);
+    // renderedElement为类实例化的对象
     var renderedElement;
 
     // Support functional components
@@ -285,7 +286,6 @@ var ReactCompositeComponent = {
 
   _constructComponentWithoutOwner: function (doConstruct, publicProps, publicContext, updateQueue) {
     var Component = this._currentElement.type;
-
     if (doConstruct) {
       if (process.env.NODE_ENV !== 'production') {
         return measureLifeCyclePerf(function () {

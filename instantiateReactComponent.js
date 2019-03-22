@@ -74,6 +74,7 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
 
     // 若为html本身存在的标签执行
     if (typeof element.type === 'string') {
+      // 该方法等价于 new ReactDomComponent(element)
       instance = ReactHostComponent.createInternalComponent(element);
     } else if (isInternalComponentType(element.type)) {
       // 若为component类，且不为高阶组件(函数类)

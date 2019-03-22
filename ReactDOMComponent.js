@@ -698,6 +698,7 @@ ReactDOMComponent.Mixin = {
           DOMLazyTree.queueText(lazyTree, contentToUse);
         }
       } else if (childrenToUse != null) {
+        // 递归调用生成子dom节点的方法
         var mountImages = this.mountChildren(childrenToUse, transaction, context);
         for (var i = 0; i < mountImages.length; i++) {
           DOMLazyTree.queueChild(lazyTree, mountImages[i]);
