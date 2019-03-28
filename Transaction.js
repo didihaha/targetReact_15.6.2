@@ -138,10 +138,12 @@ var TransactionImpl = {
       // one of these calls threw.
       errorThrown = true;
       this.initializeAll(0);
+      // 这里是注入的component调用对应参数，调用过程中注入的componentDidMount声明周期在下面closeAll中释放（这些周期方法都放在数组中存储着）
       ret = method.call(scope, a, b, c, d, e, f);
       errorThrown = false;
     } finally {
       try {
+        // 在这里
         if (errorThrown) {
           // If `method` throws, prefer to show that stack trace over any thrown
           // by invoking `closeAll`.

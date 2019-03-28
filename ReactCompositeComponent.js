@@ -890,7 +890,7 @@ var ReactCompositeComponent = {
     return inst;
   },
 
-  // Stub
+  // 实际这个对象是作为instantiateReactComponent文件中ReactCompositeComponentWrapper类的原型链上的属性覆盖
   _instantiateReactComponent: null
 };
 
