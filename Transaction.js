@@ -143,7 +143,6 @@ var TransactionImpl = {
       errorThrown = false;
     } finally {
       try {
-        // 在这里
         if (errorThrown) {
           // If `method` throws, prefer to show that stack trace over any thrown
           // by invoking `closeAll`.

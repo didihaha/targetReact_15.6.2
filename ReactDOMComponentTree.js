@@ -112,8 +112,8 @@ function getClosestInstanceFromNode(node) {
     return node[internalInstanceKey];
   }
 
-  // Walk up the tree until we find an ancestor whose instance we have cached.
   var parents = [];
+  // 循环查询最近由react生成的父节点，若一直没找到返回null,并将不是react生成的父节点存到parents
   while (!node[internalInstanceKey]) {
     parents.push(node);
     if (node.parentNode) {
@@ -127,6 +127,7 @@ function getClosestInstanceFromNode(node) {
 
   var closest;
   var inst;
+  // 循环释放非react创建的父节点，其实这里只会执行一次，因为在上面while循环中：当node有reactInter标识就会停止循环，所以只有node有标识，parents中的元素不会有标识
   for (; node && (inst = node[internalInstanceKey]); node = parents.pop()) {
     closest = inst;
     if (parents.length) {

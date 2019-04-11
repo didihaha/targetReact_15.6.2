@@ -138,7 +138,7 @@ var ReactCompositeComponent = {
     this._pendingForceUpdate = false;
 
     this._renderedNodeType = null;
-    this._renderedComponent = null;
+    this._renderedComponent = null;         // 组件的根节点
     this._context = null;
     this._mountOrder = 0;
     this._topLevelWrapper = null;

@@ -68,7 +68,7 @@ function getReactRootElementInContainer(container) {
   if (!container) {
     return null;
   }
-
+  // 若container类型为document，返回document.documentElement,否则返回第一个子节点
   if (container.nodeType === DOC_NODE_TYPE) {
     return container.documentElement;
   } else {
@@ -99,8 +99,7 @@ function mountComponentIntoNode(wrapperInstance, container, transaction, shouldR
     markerName = 'React mount: ' + (typeof type === 'string' ? type : type.displayName || type.name);
     console.time(markerName);
   }
-  
-  // ReactReconciler实际调用的是传入的wrapperInstance的mountComponent方法
+  // ReactReconciler实际调用的是传入的wrapperInstance的mountComponent方法             这里进行顶层TopLevelWrapper和container绑定
   var markup = ReactReconciler.mountComponent(wrapperInstance, transaction, null, ReactDOMContainerInfo(wrapperInstance, container), context, 0 /* parentDebugID */
   );
 
@@ -120,6 +119,7 @@ function mountComponentIntoNode(wrapperInstance, container, transaction, shouldR
  * @param {boolean} shouldReuseMarkup If true, do not insert markup
  */
 function batchedMountComponentIntoNode(componentInstance, container, shouldReuseMarkup, context) {
+  // transaction为ReactReconcileTransaction类实例化的对象
   var transaction = ReactUpdates.ReactReconcileTransaction.getPooled(
   /* useCreateElement */
   !shouldReuseMarkup && ReactDOMFeatureFlags.useCreateElement);
@@ -296,7 +296,7 @@ var ReactMount = {
   /**
    * Render a new component into the DOM. Hooked by hooks!
    *
-   * @param {ReactElement} nextElement element to render
+   * @param {ReactElement} nextElement 这里是包装过的TopLevelWrapper
    * @param {DOMElement} container container to render into
    * @param {boolean} shouldReuseMarkup if we should skip the markup insertion
    * @return {ReactComponent} nextComponent
@@ -342,12 +342,6 @@ var ReactMount = {
   },
 
   _renderSubtreeIntoContainer: function (parentComponent, nextElement, container, callback) {
-    ReactUpdateQueue.validateCallback(callback, 'ReactDOM.render');
-    !React.isValidElement(nextElement) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactDOM.render(): Invalid component element.%s', typeof nextElement === 'string' ? " Instead of passing a string like 'div', pass " + "React.createElement('div') or <div />." : typeof nextElement === 'function' ? ' Instead of passing a class like Foo, pass ' + 'React.createElement(Foo) or <Foo />.' : // Check if it quacks like an element
-    nextElement != null && nextElement.props !== undefined ? ' This may be caused by unintentionally loading two independent ' + 'copies of React.' : '') : _prodInvariant('39', typeof nextElement === 'string' ? " Instead of passing a string like 'div', pass " + "React.createElement('div') or <div />." : typeof nextElement === 'function' ? ' Instead of passing a class like Foo, pass ' + 'React.createElement(Foo) or <Foo />.' : nextElement != null && nextElement.props !== undefined ? ' This may be caused by unintentionally loading two independent ' + 'copies of React.' : '') : void 0;
-
-    process.env.NODE_ENV !== 'production' ? warning(!container || !container.tagName || container.tagName.toUpperCase() !== 'BODY', 'render(): Rendering components directly into document.body is ' + 'discouraged, since its children are often manipulated by third-party ' + 'scripts and browser extensions. This may lead to subtle ' + 'reconciliation issues. Try rendering into a container element created ' + 'for your app.') : void 0;
-
     // 将传入的nextElement当做子节点传入到TopLevelWrapper类中
     var nextWrappedElement = React.createElement(TopLevelWrapper, {
       child: nextElement
@@ -355,12 +349,13 @@ var ReactMount = {
 
     var nextContext;
     if (parentComponent) {
+      // 根据dom节点的reactInternal标识查询类的实例化对象，初始化时候逻辑不走这里
       var parentInst = ReactInstanceMap.get(parentComponent);
       nextContext = parentInst._processChildContext(parentInst._context);
     } else {
       nextContext = emptyObject;
     }
-
+    // 初始化prevComponent为null
     var prevComponent = getTopLevelWrapperInContainer(container);
 
     if (prevComponent) {

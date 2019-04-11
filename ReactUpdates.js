@@ -24,7 +24,7 @@ var updateBatchNumber = 0;
 var asapCallbackQueue = CallbackQueue.getPooled();
 var asapEnqueued = false;
 
-var batchingStrategy = null;
+var batchingStrategy = null; // reactDom初始化时注入的ReactDefaultBatchingStrategy组件
 
 function ensureInjected() {
   !(ReactUpdates.ReactReconcileTransaction && batchingStrategy) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must inject a reconcile transaction class and batching strategy') : _prodInvariant('123') : void 0;
