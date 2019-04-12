@@ -374,7 +374,7 @@ function ReactDOMComponent(element) {
   this._renderedChildren = null;
   this._previousStyle = null;
   this._previousStyleCopy = null;
-  this._hostNode = null;
+  this._hostNode = null;                    // 指向该组件生成的实例化dom节点
   this._hostParent = null;
   this._rootNodeID = 0;
   this._domID = 0;
@@ -513,6 +513,7 @@ ReactDOMComponent.Mixin = {
       ReactDOMComponentTree.precacheNode(this, el);
       this._flags |= Flags.hasCachedChildNodes;
       if (!this._hostParent) {
+        // 如果是由react创建的第一个dom节点，设置根节点属性
         DOMPropertyOperations.setAttributeForRoot(el);
       }
       this._updateDOMProperties(null, props, transaction);

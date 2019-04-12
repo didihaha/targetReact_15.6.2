@@ -125,10 +125,10 @@ var ReactCompositeComponent = {
   construct: function (element) {
     this._currentElement = element;
     this._rootNodeID = 0;
-    this._compositeType = null;
+    this._compositeType = null;             // 标识组件类型的 0：函数组件  1：React.PureComponent  2：React.Component
     this._instance = null;
     this._hostParent = null;
-    this._hostContainerInfo = null;
+    this._hostContainerInfo = null;         // 所有组件实例化的对象该值都相同：ReactDOMContainerInfo(wrapperInstance, container)
 
     // See ReactUpdateQueue
     this._updateBatchNumber = null;
@@ -137,10 +137,10 @@ var ReactCompositeComponent = {
     this._pendingReplaceState = false;
     this._pendingForceUpdate = false;
 
-    this._renderedNodeType = null;
+    this._renderedNodeType = null;          // 组件根节点类型  0：dom节点  1：类组件  2：空组件
     this._renderedComponent = null;         // 组件的根节点
     this._context = null;
-    this._mountOrder = 0;
+    this._mountOrder = 0;                   // 每个自定义组件由外层到内层序列值依次自增一次
     this._topLevelWrapper = null;
 
     // See ReactUpdates and ReactUpdateQueue.
@@ -226,24 +226,11 @@ var ReactCompositeComponent = {
     // Store a reference from the instance back to the internal representation
     ReactInstanceMap.set(inst, this);
 
-    if (process.env.NODE_ENV !== 'production') {
-      // Since plain JS classes are defined without any special initialization
-      // logic, we can not catch common errors early. Therefore, we have to
-      // catch them here, at initialization time, instead.
-      process.env.NODE_ENV !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved || inst.state, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a static ' + 'property to define propTypes instead.', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'static property to define contextTypes instead.', this.getName() || 'a component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(typeof inst.componentShouldUpdate !== 'function', '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', this.getName() || 'A component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(typeof inst.componentDidUnmount !== 'function', '%s has a method called ' + 'componentDidUnmount(). But there is no such lifecycle method. ' + 'Did you mean componentWillUnmount()?', this.getName() || 'A component') : void 0;
-      process.env.NODE_ENV !== 'production' ? warning(typeof inst.componentWillRecieveProps !== 'function', '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', this.getName() || 'A component') : void 0;
-    }
-
     var initialState = inst.state;
+    // 若没有初始化state转换成null
     if (initialState === undefined) {
       inst.state = initialState = null;
     }
-    !(typeof initialState === 'object' && !Array.isArray(initialState)) ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.state: must be set to an object or null', this.getName() || 'ReactCompositeComponent') : _prodInvariant('106', this.getName() || 'ReactCompositeComponent') : void 0;
 
     this._pendingStateQueue = null;
     this._pendingReplaceState = false;
