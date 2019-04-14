@@ -371,7 +371,7 @@ function ReactDOMComponent(element) {
   this._currentElement = element;
   this._tag = tag.toLowerCase();
   this._namespaceURI = null;
-  this._renderedChildren = null;
+  this._renderedChildren = null;            // 包含所有第一子集节点的对象  键名.0  .1  .2递增 或者是组件名称
   this._previousStyle = null;
   this._previousStyleCopy = null;
   this._hostNode = null;                    // 指向该组件生成的实例化dom节点

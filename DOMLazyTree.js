@@ -28,6 +28,7 @@ var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
  *
  * See https://github.com/spicyj/innerhtml-vs-createelement-vs-clonenode.
  */
+// 用来判断是否是IE或者EDGE浏览器，采用this.childrem数组添加元素的形式增加子节点
 var enableLazy = typeof document !== 'undefined' && typeof document.documentMode === 'number' || typeof navigator !== 'undefined' && typeof navigator.userAgent === 'string' && /\bEdge\/\d/.test(navigator.userAgent);
 
 function insertTreeChildren(tree) {
