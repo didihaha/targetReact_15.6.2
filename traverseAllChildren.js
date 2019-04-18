@@ -84,9 +84,9 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
   var nextName;
   var subtreeCount = 0; // Count of children found in the current subtree.
   var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
-
+  // 由于react当前版本设计的每个组建必须有一个根节点，这里children的子元素必然不是数组，从而保证react广度优先创建组建的实例化对象
   if (Array.isArray(children)) {
-    // 是数组递归调用生成NODE节点
+    // 是数组递归调用生成组建实例化的对象
     for (var i = 0; i < children.length; i++) {
       child = children[i];
       nextName = nextNamePrefix + getComponentKey(child, i);
