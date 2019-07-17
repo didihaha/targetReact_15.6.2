@@ -111,9 +111,9 @@ function getClosestInstanceFromNode(node) {
   if (node[internalInstanceKey]) {
     return node[internalInstanceKey];
   }
+  // 若当前DOM节点没有对应react标识，说明该节点不是通过react创建的，将其缓存起来更新react生成的dom节点后再重新插入
 
   var parents = [];
-  // 循环查询最近由react生成的父节点，若一直没找到返回null,并将不是react生成的父节点存到parents
   while (!node[internalInstanceKey]) {
     parents.push(node);
     if (node.parentNode) {

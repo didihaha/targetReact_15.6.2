@@ -373,7 +373,7 @@ function ReactDOMComponent(element) {
   this._previousStyleCopy = null;
   this._hostNode = null;                    // 指向该组件生成的实例化dom节点
   this._hostParent = null;
-  this._rootNodeID = 0;
+  this._rootNodeID = 0;                     // 基于全局的globalIdCounter变量设置，用来决定该实例对应dom节点的绑定的事件：.1
   this._domID = 0;
   this._hostContainerInfo = null;
   this._wrapperState = null;
