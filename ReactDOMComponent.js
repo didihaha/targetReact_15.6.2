@@ -365,7 +365,7 @@ var globalIdCounter = 1;
 function ReactDOMComponent(element) {
   var tag = element.type;
   validateDangerousTag(tag);
-  this._currentElement = element;
+  this._currentElement = element;           // 开发写的业务组件
   this._tag = tag.toLowerCase();
   this._namespaceURI = null;
   this._renderedChildren = null;            // 包含所有第一子集节点的对象  键名.0  .1  .2递增 或者是组件key值
