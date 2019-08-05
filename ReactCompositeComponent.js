@@ -123,10 +123,10 @@ var ReactCompositeComponent = {
    * @internal
    */
   construct: function (element) {
-    this._currentElement = element;
+    this._currentElement = element;         // 开发写的业务组件
     this._rootNodeID = 0;
     this._compositeType = null;             // 标识组件类型的 0：函数组件  1：React.PureComponent  2：React.Component
-    this._instance = null;
+    this._instance = null;                  // 开发写的业务组件实例化后的对象
     this._hostParent = null;
     this._hostContainerInfo = null;         // 所有组件实例化的对象该值都相同：ReactDOMContainerInfo(wrapperInstance, container)
 
