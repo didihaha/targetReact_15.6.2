@@ -602,6 +602,7 @@ var ReactCompositeComponent = {
     var nextState = this._processPendingState(nextProps, nextContext);
     var shouldUpdate = true;
 
+    // _pendingForceUpdate属性是由forceUpdate方法直接置为true，因此forceUpdate方法不走shouldComponentUpdate声明周期
     if (!this._pendingForceUpdate) {
       if (inst.shouldComponentUpdate) {
         if (process.env.NODE_ENV !== 'production') {
@@ -613,6 +614,7 @@ var ReactCompositeComponent = {
         }
       } else {
         if (this._compositeType === CompositeTypes.PureClass) {
+          // shallowEqual是react进行对象属性值浅比较的方法，这里仅比较state和props的键名和键值是否完全一样
           shouldUpdate = !shallowEqual(prevProps, nextProps) || !shallowEqual(inst.state, nextState);
         }
       }

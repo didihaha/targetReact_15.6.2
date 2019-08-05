@@ -19,7 +19,7 @@ var RESET_BATCHED_UPDATES = {
 
 var FLUSH_BATCHED_UPDATES = {
   initialize: emptyFunction,
-  close: ReactUpdates.flushBatchedUpdates.bind(ReactUpdates)
+  close: ReactUpdates.flushBatchedUpdates.bind(ReactUpdates)      // 这个方法释放setState传入的第一个参数
 };
 
 var TRANSACTION_WRAPPERS = [FLUSH_BATCHED_UPDATES, RESET_BATCHED_UPDATES];
