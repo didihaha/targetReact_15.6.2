@@ -326,7 +326,9 @@ var ReactMultiChild = {
         var nextChild = nextChildren[name];
         if (prevChild === nextChild) {
           updates = enqueue(updates, this.moveChild(prevChild, lastPlacedNode, nextIndex, lastIndex));
+          // mountIndex等于挂载时候对应的dom节点序列值
           lastIndex = Math.max(prevChild._mountIndex, lastIndex);
+          // 这一行相当于更新nextChild的_mountIndex
           prevChild._mountIndex = nextIndex;
         } else {
           if (prevChild) {
