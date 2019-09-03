@@ -133,14 +133,14 @@ var ReactCompositeComponent = {
     // See ReactUpdateQueue
     this._updateBatchNumber = null;
     this._pendingElement = null;
-    this._pendingStateQueue = null;
+    this._pendingStateQueue = null;         // 调用setState后会更改为数组，用于存储setState传入的参数
     this._pendingReplaceState = false;
     this._pendingForceUpdate = false;
 
     this._renderedNodeType = null;          // 组件根节点类型  0：dom节点  1：类组件  2：空组件
     this._renderedComponent = null;         // 组件的根节点
     this._context = null;
-    this._mountOrder = 0;                   // 每个自定义组件由外层到内层序列值依次自增一次
+    this._mountOrder = 0;                   // 每个自定义组件由外层到内层序列值依次自增一次，可认为是树的深度
     this._topLevelWrapper = null;
 
     // See ReactUpdates and ReactUpdateQueue.
@@ -214,8 +214,7 @@ var ReactCompositeComponent = {
       process.env.NODE_ENV !== 'production' ? warning(inst.props === undefined || !propsMutated, '%s(...): When calling super() in `%s`, make sure to pass ' + "up the same props that your component's constructor was passed.", componentName, componentName) : void 0;
     }
 
-    // These should be set up in the constructor, but as a convenience for
-    // simpler class abstractions, we set them up after the fact.
+    // 下面四行代码保证我们的业务组建类在constructor中未调用super()也能拿到实例化对象上的属性值
     inst.props = publicProps;
     inst.context = publicContext;
     inst.refs = emptyObject;
@@ -251,6 +250,7 @@ var ReactCompositeComponent = {
           }, _this._debugID, 'componentDidMount');
         });
       } else {
+        // 将componentDidMount生命周期函数推入到mountReady中，在render完成后再调用，从而控制生命周期
         transaction.getReactMountReady().enqueue(inst.componentDidMount, inst);
       }
     }

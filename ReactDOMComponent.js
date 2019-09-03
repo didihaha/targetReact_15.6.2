@@ -169,7 +169,7 @@ function enqueuePutListener(inst, registrationName, listener, transaction) {
     listener: listener
   });
 }
-
+// 在对应节点上挂载空函数，为取到传入的e.target数据
 function putListener() {
   var listenerToPut = this;
   EventPluginHub.putListener(listenerToPut.inst, listenerToPut.registrationName, listenerToPut.listener);
