@@ -216,6 +216,7 @@ function asap(callback, context) {
 }
 
 var ReactUpdatesInjection = {
+  // ReactReconcileTransaction
   injectReconcileTransaction: function (ReconcileTransaction) {
     !ReconcileTransaction ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a reconcile transaction class') : _prodInvariant('126') : void 0;
     ReactUpdates.ReactReconcileTransaction = ReconcileTransaction;

@@ -15,6 +15,7 @@
  */
 
 var createMicrosoftUnsafeLocalFunction = function (func) {
+  // 这个IF条件是处理win8系统上的app安全问题
   if (typeof MSApp !== 'undefined' && MSApp.execUnsafeLocalFunction) {
     return function (arg0, arg1, arg2, arg3) {
       MSApp.execUnsafeLocalFunction(function () {

@@ -149,11 +149,8 @@ function assertValidProps(component, props) {
   }
   !(props.style == null || typeof props.style === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'The `style` prop expects a mapping from style properties to values, not a string. For example, style={{marginRight: spacing + \'em\'}} when using JSX.%s', getDeclarationErrorAddendum(component)) : _prodInvariant('62', getDeclarationErrorAddendum(component)) : void 0;
 }
-
+// listener为组件中自己绑定的事件函数
 function enqueuePutListener(inst, registrationName, listener, transaction) {
-  if (transaction instanceof ReactServerRenderingTransaction) {
-    return;
-  }
   if (process.env.NODE_ENV !== 'production') {
     // IE8 has no API for event capturing and the `onScroll` event doesn't
     // bubble.
@@ -368,7 +365,7 @@ var globalIdCounter = 1;
 function ReactDOMComponent(element) {
   var tag = element.type;
   validateDangerousTag(tag);
-  this._currentElement = element;
+  this._currentElement = element;           // 开发写的业务组件
   this._tag = tag.toLowerCase();
   this._namespaceURI = null;
   this._renderedChildren = null;            // 包含所有第一子集节点的对象  键名.0  .1  .2递增 或者是组件key值
@@ -376,7 +373,7 @@ function ReactDOMComponent(element) {
   this._previousStyleCopy = null;
   this._hostNode = null;                    // 指向该组件生成的实例化dom节点
   this._hostParent = null;
-  this._rootNodeID = 0;
+  this._rootNodeID = 0;                     // 基于全局的globalIdCounter变量设置，用来决定该实例对应dom节点的绑定的事件：.1
   this._domID = 0;
   this._hostContainerInfo = null;
   this._wrapperState = null;

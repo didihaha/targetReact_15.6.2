@@ -229,9 +229,9 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
    */
   listenTo: function (registrationName, contentDocumentHandle) {
     var mountAt = contentDocumentHandle;
-    var isListening = getListeningForDocument(mountAt);
+    var isListening = getListeningForDocument(mountAt);       // document上已经监听的方法名
     var dependencies = EventPluginRegistry.registrationNameDependencies[registrationName];
-
+    
     for (var i = 0; i < dependencies.length; i++) {
       var dependency = dependencies[i];
       if (!(isListening.hasOwnProperty(dependency) && isListening[dependency])) {

@@ -124,6 +124,7 @@ function batchedMountComponentIntoNode(componentInstance, container, shouldReuse
   /* useCreateElement */
   !shouldReuseMarkup && ReactDOMFeatureFlags.useCreateElement);
   transaction.perform(mountComponentIntoNode, null, componentInstance, container, transaction, shouldReuseMarkup, context);
+  // 执行到这里时候dom节点已经完成挂载，再执行CallbackQueue销毁操作
   ReactUpdates.ReactReconcileTransaction.release(transaction);
 }
 

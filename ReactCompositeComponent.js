@@ -123,10 +123,10 @@ var ReactCompositeComponent = {
    * @internal
    */
   construct: function (element) {
-    this._currentElement = element;
+    this._currentElement = element;         // 开发写的业务组件
     this._rootNodeID = 0;
     this._compositeType = null;             // 标识组件类型的 0：函数组件  1：React.PureComponent  2：React.Component
-    this._instance = null;
+    this._instance = null;                  // 开发写的业务组件实例化后的对象
     this._hostParent = null;
     this._hostContainerInfo = null;         // 所有组件实例化的对象该值都相同：ReactDOMContainerInfo(wrapperInstance, container)
 
@@ -602,6 +602,7 @@ var ReactCompositeComponent = {
     var nextState = this._processPendingState(nextProps, nextContext);
     var shouldUpdate = true;
 
+    // _pendingForceUpdate属性是由forceUpdate方法直接置为true，因此forceUpdate方法不走shouldComponentUpdate声明周期
     if (!this._pendingForceUpdate) {
       if (inst.shouldComponentUpdate) {
         if (process.env.NODE_ENV !== 'production') {
@@ -613,6 +614,7 @@ var ReactCompositeComponent = {
         }
       } else {
         if (this._compositeType === CompositeTypes.PureClass) {
+          // shallowEqual是react进行对象属性值浅比较的方法，这里仅比较state和props的键名和键值是否完全一样
           shouldUpdate = !shallowEqual(prevProps, nextProps) || !shallowEqual(inst.state, nextState);
         }
       }

@@ -85,7 +85,7 @@ var TransactionImpl = {
    * "PooledClass".
    */
   reinitializeTransaction: function () {
-    this.transactionWrappers = this.getTransactionWrappers();
+    this.transactionWrappers = this.getTransactionWrappers();   // 返回的是ReactReconcileTransaction文件中的TRANSACTION_WRAPPERS
     if (this.wrapperInitData) {
       this.wrapperInitData.length = 0;
     } else {
