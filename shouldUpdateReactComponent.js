@@ -19,7 +19,7 @@
  * @return {boolean} True if the existing instance should be updated.
  * @protected
  */
-
+// 该函数是diff第一步，先确定组件返回结果的类型是否一致（数据类型 -> 组件type -> 组件key值）
 function shouldUpdateReactComponent(prevElement, nextElement) {
   var prevEmpty = prevElement === null || prevElement === false;
   var nextEmpty = nextElement === null || nextElement === false;
